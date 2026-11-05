@@ -5,7 +5,6 @@ export default function Landing({
   dashboard,
   setOpening,
   showDashboard,
-  openAuth,
 }) {
   return (
     <>
@@ -38,29 +37,7 @@ export default function Landing({
         className={opening ? 'landing pre-reveal' : 'landing'}
         hidden={dashboard}
       >
-        <header className="landing-header">
-          <a className="landing-brand" href="#landing" aria-label="5PU5 홈">
-            <img
-              src="assets/5PU5-master.svg"
-              width="92"
-              height="38"
-              alt="5PU5"
-            />
-          </a>
-          <nav className="landing-nav" aria-label="랜딩 메뉴">
-            <a href="#landing-benefits">가격 비교</a>
-            <a href="#landing-benefits">변동 추적</a>
-            <a href="#landing-benefits">AI 분석</a>
-          </nav>
-          <button
-            className="nav-demo-button"
-            id="nav-demo-button"
-            type="button"
-            onClick={showDashboard}
-          >
-            데모 열기 <span aria-hidden="true">↗</span>
-          </button>
-        </header>
+        {/* # 2026-11-05 | 사업 소개 페이지의 중복 상단 메뉴 바 제거 */}
         <div className="hero-content">
           <p className="hero-pill">
             <span aria-hidden="true"></span> GPU CLOUD PRICE INTELLIGENCE
@@ -75,27 +52,7 @@ export default function Landing({
             <br />
             약정 할인부터 최근 변동까지, 필요한 판단만 선명하게.
           </p>
-          <div className="hero-actions">
-            <button
-              className="primary-button hero-primary"
-              id="start-button"
-              type="button"
-              onClick={openAuth}
-            >
-              무료로 시작하기 <span aria-hidden="true">→</span>
-            </button>
-            <button
-              className="secondary-button hero-secondary"
-              id="demo-button"
-              type="button"
-              onClick={showDashboard}
-            >
-              대시보드 미리보기
-            </button>
-          </div>
-          <p className="demo-note">
-            외부 계정 · API 키 없이 실행되는 가상 데이터 데모
-          </p>
+          {/* # 2026-11-05 | 소개 상단의 시작 버튼 두 개와 데모 안내 문구 제거 */}
         </div>
         <section
           className="feature-showcase"
@@ -270,64 +227,7 @@ export default function Landing({
             GPU 가격 비교하기 <span aria-hidden="true">↗</span>
           </button>
         </section>
-        <footer className="site-footer">
-          <div className="footer-main">
-            <div className="footer-brand">
-              <a href="#landing" aria-label="5PU5 처음으로">
-                <img
-                  src="assets/5PU5-master.svg"
-                  width="105"
-                  height="44"
-                  alt="5PU5"
-                />
-              </a>
-              <p>
-                GPU 가격을 비교하는
-                <br />더 명확한 기준.
-              </p>
-              <span className="footer-status">
-                <i></i>프론트엔드 데모
-              </span>
-            </div>
-            <div className="footer-column">
-              <h3>서비스</h3>
-              <button type="button" data-open-dashboard onClick={showDashboard}>
-                GPU 가격 비교
-              </button>
-              <button type="button" data-open-dashboard onClick={showDashboard}>
-                가격 변동 추이
-              </button>
-              <button type="button" data-open-dashboard onClick={showDashboard}>
-                AI 질문
-              </button>
-            </div>
-            <div className="footer-column">
-              <h3>둘러보기</h3>
-              <a href="#landing-benefits">주요 기능</a>
-              <button type="button" data-open-dashboard onClick={showDashboard}>
-                대시보드 열기
-              </button>
-              <a href="#landing">맨 위로 ↑</a>
-            </div>
-            <div className="footer-column footer-about">
-              <h3>5PU5 · 오푸스</h3>
-              <p>
-                SKALA 팀 프로젝트
-                <br />
-                GPU 클라우드 가격 비교 서비스
-              </p>
-              <p className="footer-demo-note">
-                현재 가격과 AI 답변은
-                <br />
-                시연용 가상 데이터입니다.
-              </p>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <span>© 2026 5PU5</span>
-            <span>GPU CLOUD PRICE INTELLIGENCE</span>
-          </div>
-        </footer>
+        {/* # 2026-11-05 | 하단은 App에서 메인과 같은 공통 Footer를 표시 */}
       </section>{' '}
     </>
   );
