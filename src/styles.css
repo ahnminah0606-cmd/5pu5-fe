@@ -265,8 +265,8 @@ html {
 }
 .dashboard-footer-inner {
   position: relative;
-  /* # 2026-11-05 | 화면 3등분 중 가운데 영역만 사용. 양쪽 1/3은 여백 */
-  width: 33.333333%;
+  /* # 2026-11-05 | 푸터 전체를 최대 700px로 중앙 정렬, 작은 화면은 좌우 24px 여백 */
+  width: min(700px, calc(100% - 48px));
   margin: 0 auto;
   padding: 0;
 }
@@ -275,7 +275,7 @@ html {
   display: flex;
   justify-content: center;
 }
-/* # 2026-11-05 | 내용 위치는 유지하고 위아래 구분선만 좌우 64px씩 연장 */
+/* # 2026-11-05 | 위아래 구분선을 푸터 너비와 동일하게 표시 */
 .dashboard-footer-inner::before,
 .dashboard-footer-bottom::before {
   content: '';
@@ -283,7 +283,7 @@ html {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: min(calc(100% + 128px), calc(100vw - 48px));
+  width: 100%;
   border-top: 1px solid #e5e5e7;
 }
 .dashboard-footer-brand img {
@@ -295,10 +295,10 @@ html {
 }
 .dashboard-footer-brand span { font-size: 10px; letter-spacing: 0.06em; }
 
-/* # 2026-11-05 | 작은 글자 로고와 메뉴 3개를 나란히 배치 */
+/* # 2026-11-05 | 로고와 메뉴를 같은 너비의 4칸에 가운데 정렬 */
 .dashboard-footer-columns {
   display: grid;
-  grid-template-columns: 48px repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 24px;
   align-items: start;
   padding: 28px 0;
@@ -338,10 +338,6 @@ html {
   gap: 16px;
   padding: 16px 0 24px;
   font-size: 11px;
-}
-/* # 2026-11-05 | 태블릿 이하에서는 가운데 정렬과 좌우 24px 여백 유지 */
-@media (max-width: 1024px) {
-  .dashboard-footer-inner { width: calc(100% - 48px); max-width: 640px; }
 }
 @media (max-width: 768px) {
   .dashboard-footer-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
