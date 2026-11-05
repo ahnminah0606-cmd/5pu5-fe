@@ -42,14 +42,14 @@ img {
   background: #fff;
 }
 
-/* # 2026-11-05 | 본문 양쪽 여백: 최대 너비 1200px, 가운데 정렬. 왼쪽 144px는 인덱스 영역 */
+/* # 2026-11-05 | 본문을 화면 정중앙에 배치. 좌우 같은 너비의 여백 중 왼쪽에 인덱스 배치 */
 .gpu-preview-content {
   min-height: calc(100svh - 54px);
-  max-width: 1200px;
+  max-width: 1300px; /* # 2026-11-05 | 중앙 정렬을 유지하며 최대 너비를 1300px로 조정 */
   margin: 0 auto;
   padding: 40px 32px;
   display: grid;
-  grid-template-columns: 144px minmax(0, 1fr);
+  grid-template-columns: 144px minmax(0, 1fr) 144px;
   gap: 48px;
   align-items: start;
 }
