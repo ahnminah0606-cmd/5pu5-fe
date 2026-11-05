@@ -16,6 +16,8 @@ export default function App() {
   const [dashboard, setDashboard] = useState(() => new URLSearchParams(window.location.search).get('landing') !== '1');
   const [opening, setOpening] = useState(false);
   const [selectedGpu, setSelectedGpu] = useState('B300');
+  // # 2026-11-05 | 적용한 조건은 모델별로 부모에서 보관. 실제 가격 조회는 API 연결 후 구현
+  const [filtersByModel, setFiltersByModel] = useState({});
   const [activeSection, setActiveSection] = useState(sections[0].id);
 
   useEffect(() => {
@@ -71,13 +73,32 @@ export default function App() {
         selectedGpu={selectedGpu}
         onGpuChange={setSelectedGpu}
         onHome={showDashboard}
+        filtersByModel={filtersByModel}
+        onApplyFilters={(model, filters) => {
+          setSelectedGpu(model);
+          setFiltersByModel(current => ({...current, [model]: filters}));
+        }}
       />
       <main id="main-content" className="gpu-preview-content" tabIndex={-1}>
         <SectionIndex sections={sections} activeSection={activeSection} />
         <div className="gpu-section-stack">
+          {/* # 2026-11-05 | 클릭으로 선택한 GPU 모델명을 본문 상단에 크게 표시 */}
+          <header className="gpu-product-heading">
+            <h1>{selectedGpu}</h1>
+            <p>GPU 클라우드 가격 비교</p>
+            {filtersByModel[selectedGpu] && <p className="applied-filter-summary" role="status">
+              적용 조건 · {({on_demand:'On-Demand',spot:'Spot',reserved:'Reserved'})[filtersByModel[selectedGpu].billingType]}
+              {filtersByModel[selectedGpu].contractMonths !== 'all' ? ` ${filtersByModel[selectedGpu].contractMonths}개월` : ''}
+              {' · '}{({all:'전체 리전','us-east':'US East','us-west':'US West',eu:'EU'})[filtersByModel[selectedGpu].region]}
+              {' · '}{({all:'전체 사업자',runpod:'Runpod',seeweb:'Seeweb',daytona:'Daytona'})[filtersByModel[selectedGpu].provider]}
+              {selectedGpu === 'H100' && <> · {filtersByModel[selectedGpu].memory.map(v => Math.max(80, Math.min(94, v))).join('–')} GB/GPU</>}
+              {' · '}{filtersByModel[selectedGpu].gpuCount.join('–')}장
+              {' · $'}{filtersByModel[selectedGpu].price.join('–$')} / GPU-hour · 시안용, 가격 조회 미연결
+            </p>}
+          </header>
           {sections.map((section) => (
             <section key={section.id} id={section.id} className="gpu-content-section" aria-labelledby={`${section.id}-title`}>
-              <h1 id={`${section.id}-title`}>{section.label}</h1>
+              <h2 id={`${section.id}-title`}>{section.label}</h2>
             </section>
           ))}
         </div>

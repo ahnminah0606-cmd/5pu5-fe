@@ -96,11 +96,29 @@ img {
 .gpu-content-section:last-child {
   border-bottom: 0;
 }
-.gpu-content-section h1 {
+.gpu-content-section h2 {
   margin: 4px 0 24px;
   font-size: 22px;
   font-weight: 600;
   letter-spacing: -0.5px;
+}
+
+/* # 2026-11-05 | 선택한 제품명: 본문과 왼쪽 기준선을 맞춘 큰 제목 */
+.gpu-product-heading {
+  padding: 24px 0 56px;
+}
+.gpu-product-heading h1 {
+  margin: 0;
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+}
+.gpu-product-heading p {
+  margin: 12px 0 0;
+  color: #85858c;
+  font-size: 14px;
 }
 html {
   scroll-behavior: smooth;
@@ -179,15 +197,29 @@ html {
   color: #1d1d1f;
   font-weight: 600;
 }
-/* # 2026-11-05 | 현재 선택한 탭 밑줄: 두께 2px, 좌우 길이 조절 */
-.gpu-navigation-tab.active::after {
-  content: '';
+
+/* # 2026-11-05 | GPU 탭 호버 박스: 상단 바 바로 아래 표시. 내부 필터는 아직 없음 */
+.gpu-hover-panel {
   position: absolute;
-  right: 12px;
-  bottom: 0;
-  left: 12px;
-  height: 2px;
-  background: #1d1d1f;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%); /* # 2026-11-05 | 박스 너비의 절반만큼 되돌려 화면 가로 중앙 정렬 */
+  width: min(768px, calc(75% - 24px));
+  padding-top: 8px; /* 탭에서 박스로 이동할 때 마우스가 끊기지 않는 연결 영역 */
+  z-index: 21;
+}
+.gpu-hover-panel-box {
+  min-height: 220px;
+  border: 1px solid #e5e5e7;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+@media (max-width: 768px) {
+  .gpu-hover-panel {
+    left: 50%;
+    width: calc(100% - 32px);
+  }
 }
 /* # 2026-11-05 | 작은 화면 전용: 너비 768px 이하에서는 상단·탭 여백을 줄임 */
 @media (max-width: 768px) {
@@ -318,3 +350,40 @@ html {
 .footer-notice-heading h2 { margin: 0; font-size: 18px; font-weight: 600; }
 .footer-notice-heading button { width: 44px; height: 44px; border: 0; border-radius: 6px; background: transparent; font-size: 24px; color: #6e6e73; }
 .footer-notice p { margin: 16px 0 0; font-size: 13px; line-height: 1.8; color: #6e6e73; }
+
+/* # 2026-11-05 | 호버 박스 내부: 기본 조건과 범위 필터를 작은 글씨로 배치 */
+.gpu-hover-panel-box { max-height: calc(100svh - 78px); overflow-y: auto; }
+.gpu-filter-form { padding: 20px; color: #1d1d1f; }
+.gpu-filter-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.gpu-filter-heading h2 { margin: 0; font-size: 13px; font-weight: 600; }
+.filter-reset { border: 0; background: transparent; color: #6e6e73; font-size: 12px; padding: 8px; }
+.gpu-filter-form fieldset { min-width: 0; border: 0; padding: 0; margin: 0; }
+.gpu-filter-form legend { padding: 0; margin-bottom: 10px; font-size: 12px; font-weight: 600; }
+.gpu-filter-selects { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin: 0 0 20px; }
+.gpu-filter-selects label { display: flex; flex-direction: column; gap: 6px; font-size: 11px; font-weight: 400; color: #6e6e73; }
+.gpu-filter-selects select { width: 100%; min-height: 38px; border: 1px solid #dedee3; border-radius: 7px; padding: 0 10px; background: #fff; color: #1d1d1f; font: inherit; font-weight: 400; }
+.gpu-filter-ranges { display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: 20px; padding: 0 0 12px; }
+.range-filter legend span { display: inline; margin-left: 4px; font-size: 10px; font-weight: 400; color: #85858c; }
+.range-values { display: flex; align-items: flex-end; gap: 6px; }
+.range-values label { flex: 1; min-width: 0; color: #85858c; font-size: 10px; }
+.range-values input { display: block; width: 100%; min-width: 0; margin-top: 4px; padding: 7px 6px; border: 0; border-bottom: 1px solid #e5e5e7; border-radius: 0; color: #1d1d1f; background: transparent; font: inherit; font-size: 12px; }
+.range-values > span { padding-bottom: 7px; color: #85858c; }
+/* # 2026-11-05 | 겹친 두 슬라이더: 손잡이만 드래그 가능하게 하여 최소·최대 독립 조절 */
+.dual-range { position: relative; height: 32px; margin-top: 8px; }
+.dual-range-track { position: absolute; top: 14px; left: 0; right: 0; height: 4px; border-radius: 4px; background: linear-gradient(to right,#e5e5e7 0%,#e5e5e7 var(--range-start),#1d1d1f var(--range-start),#1d1d1f var(--range-end),#e5e5e7 var(--range-end),#e5e5e7 100%); }
+.dual-range input { position: absolute; inset: 0; width: 100%; height: 32px; margin: 0; appearance: none; background: transparent; pointer-events: none; z-index: 3; }
+.dual-range input::-webkit-slider-thumb { appearance: none; width: 16px; height: 16px; border: 1px solid #a1a1a6; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px #0002; cursor: ew-resize; pointer-events: auto; }
+.dual-range input::-moz-range-thumb { width: 16px; height: 16px; border: 1px solid #a1a1a6; border-radius: 50%; background: #fff; cursor: ew-resize; pointer-events: auto; }
+.gpu-filter-form input:focus-visible,
+.gpu-filter-form select:focus-visible { outline: 2px solid #1464f4; outline-offset: 2px; }
+.range-limits { display: flex; justify-content: space-between; font-size: 10px; color: #85858c; }
+.gpu-filter-actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 8px; }
+.gpu-filter-actions p { margin: 0; color: #85858c; font-size: 11px; }
+.filter-apply { flex-shrink: 0; min-height: 38px; padding: 0 18px; border: 0; border-radius: 7px; background: #1d1d1f; color: #fff; font-size: 12px; }
+.gpu-product-heading .applied-filter-summary { max-width: 720px; font-size: 12px; line-height: 1.8; }
+@media (max-width: 600px) {
+  .gpu-filter-form { padding: 18px; }
+  .gpu-filter-selects { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .gpu-filter-ranges { grid-template-columns: minmax(0,1fr); gap: 20px; }
+  .gpu-filter-actions { align-items: flex-start; }
+}
