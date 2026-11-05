@@ -1,3 +1,4 @@
+// # 2026-11-05 | 기존 GPU 가격 요약 카드 (현재 메인에서 사용하지 않음)
 const money = (n) => `$${n.toFixed(2)}`;
 export default function GpuCard({ card, onCompare }) {
   const b = card.best;
