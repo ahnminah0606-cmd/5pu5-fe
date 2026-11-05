@@ -45,7 +45,7 @@ img {
 /* # 2026-11-05 | 본문을 화면 정중앙에 배치. 좌우 같은 너비의 여백 중 왼쪽에 인덱스 배치 */
 .gpu-preview-content {
   min-height: calc(100svh - 54px);
-  max-width: 1300px; /* # 2026-11-05 | 중앙 정렬을 유지하며 최대 너비를 1300px로 조정 */
+  max-width: 1200px; /* # 2026-11-05 | 중앙 정렬을 유지하며 최대 너비를 1200px로 조정 */
   margin: 0 auto;
   padding: 40px 32px;
   display: grid;
