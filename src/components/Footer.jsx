@@ -30,10 +30,11 @@ export default function Footer({ onAbout, onGpuChange }) {
   return (
     <footer className="dashboard-footer">
       <div className="dashboard-footer-inner">
-        <div className="dashboard-footer-brand">
-          <img src="/assets/5PU5-master.svg" width="76" height="32" alt="5PU5" />
-        </div>
         <div className="dashboard-footer-columns">
+          {/* # 2026-11-05 | 작은 5PU5 글자 로고를 GPU 모델 메뉴 왼쪽에 배치 */}
+          <div className="dashboard-footer-brand">
+            <img src="/assets/5PU5-master.svg" width="48" height="20" alt="5PU5" />
+          </div>
           <nav aria-label="GPU 모델">
             <h2>GPU 모델</h2>
             {models.map(model => <button key={model} type="button" onClick={() => onGpuChange(model)}>{model}</button>)}

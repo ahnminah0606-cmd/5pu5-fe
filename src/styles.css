@@ -264,22 +264,19 @@ html {
   font-size: 12px;
 }
 .dashboard-footer-inner {
+  position: relative;
   /* # 2026-11-05 | 화면 3등분 중 가운데 영역만 사용. 양쪽 1/3은 여백 */
   width: 33.333333%;
   margin: 0 auto;
   padding: 0;
 }
 .dashboard-footer-brand {
-  position: relative;
-  /* # 2026-11-05 | 메뉴와 같은 열 너비로 로고를 GPU 모델 열 중앙에 배치 */
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: center;
-  gap: 24px;
-  padding: 20px 0 24px;
+  /* # 2026-11-05 | 첫 번째 열에 작은 글자 로고를 메뉴 제목과 나란히 표시 */
+  display: flex;
+  justify-content: center;
 }
 /* # 2026-11-05 | 내용 위치는 유지하고 위아래 구분선만 좌우 64px씩 연장 */
-.dashboard-footer-brand::before,
+.dashboard-footer-inner::before,
 .dashboard-footer-bottom::before {
   content: '';
   position: absolute;
@@ -293,18 +290,18 @@ html {
   justify-self: center;
   object-fit: contain;
   /* SVG 원본 안의 여백을 포함한 버튼 없이 로고를 기준선에 맞춤 */
-  width: 64px;
-  height: auto;
+  width: 48px;
+  height: 20px;
 }
 .dashboard-footer-brand span { font-size: 10px; letter-spacing: 0.06em; }
 
-/* # 2026-11-05 | 푸터 메뉴: 로고는 유지하고 각 열의 제목과 항목을 가운데 정렬 */
+/* # 2026-11-05 | 작은 글자 로고와 메뉴 3개를 나란히 배치 */
 .dashboard-footer-columns {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 48px repeat(3, minmax(0, 1fr));
   gap: 24px;
   align-items: start;
-  padding: 0 0 28px;
+  padding: 28px 0;
 }
 .dashboard-footer-columns h2 {
   text-align: center;
@@ -350,7 +347,6 @@ html {
   .dashboard-footer-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
   .dashboard-footer-brand,
   .dashboard-footer-bottom { flex-wrap: wrap; }
-  .dashboard-footer-brand { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 /* # 2026-11-05 | 푸터 안내 창: 출처·환산 기준·제보 채널 준비 상태 표시 */
