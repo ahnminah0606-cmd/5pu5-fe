@@ -1,3 +1,5 @@
+// # 2026-11-05 | 초기 시작·소개 화면. 시작 버튼은 로그인 없이 메인 화면으로 이동
+import './landing.css';
 export default function Landing({
   opening,
   dashboard,

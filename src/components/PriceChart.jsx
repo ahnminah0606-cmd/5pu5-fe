@@ -1,3 +1,4 @@
+// # 2026-11-05 | 기존 가격 추이 그래프와 변경 이력 계산 (현재 메인에서 사용하지 않음)
 import { providerColors } from '../services/data.js';
 export function historyChanges(rows, contract, range) {
   const key = contract === 'all' ? 'onDemand' : contract;

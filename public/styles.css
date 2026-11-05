@@ -1,3 +1,4 @@
+/* # 2026-11-05 | 기존 정적 시안 스타일 사본 (현재 React 화면은 src/styles.css 사용) */
 @layer od-layout {
   [hidden]:not([hidden="until-found" i]){display:none!important} dialog:not([open]){display:none!important}
   *,*::before,*::after{box-sizing:border-box} img,svg{max-width:100%} button,input,select,textarea{font:inherit}
