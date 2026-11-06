@@ -5,9 +5,11 @@ import SectionIndex from './components/SectionIndex.jsx';
 import Landing from './components/Landing.jsx';
 import Footer from './components/Footer.jsx';
 import Opening from './components/Opening.jsx';
+import PriceSummary from './components/PriceSummary.jsx';
+import { createDefaultFilters } from './utils/filterDefaults.js';
 
 const sections = [
-  { id: 'price-history', label: '가격추이' },
+  { id: 'price-history', label: '가격 현황' },
   { id: 'price-comparison', label: '가격비교' },
   { id: 'comparison-guide', label: '비교기준' },
 ];
@@ -107,19 +109,24 @@ export default function App() {
           <header className="gpu-product-heading">
             <h1>{selectedGpu}</h1>
             <p>GPU 클라우드 가격 비교</p>
-            {filtersByModel[selectedGpu] && <p className="applied-filter-summary" role="status">
-              적용 조건 · {({on_demand:'On-Demand',spot:'Spot',reserved:'Reserved'})[filtersByModel[selectedGpu].billingType]}
-              {filtersByModel[selectedGpu].contractMonths !== 'all' ? ` ${filtersByModel[selectedGpu].contractMonths}개월` : ''}
-              {' · '}{({all:'전체 리전','us-east':'US East','us-west':'US West',eu:'EU'})[filtersByModel[selectedGpu].region]}
-              {' · '}{({all:'전체 사업자',runpod:'Runpod',seeweb:'Seeweb',daytona:'Daytona'})[filtersByModel[selectedGpu].provider]}
-              {selectedGpu === 'H100' && <> · {filtersByModel[selectedGpu].memory.map(v => Math.max(80, Math.min(94, v))).join('–')} GB/GPU</>}
-              {' · '}{filtersByModel[selectedGpu].gpuCount.join('–')}장
-              {' · $'}{filtersByModel[selectedGpu].price.join('–$')} / GPU-hour · 시안용, 가격 조회 미연결
-            </p>}
+
           </header>
           {sections.map((section) => (
             <section key={section.id} id={section.id} className="gpu-content-section" aria-labelledby={`${section.id}-title`}>
               <h2 id={`${section.id}-title`}>{section.label}</h2>
+              {/* # 2026-11-06 | 가격추이 상단에 선택 모델의 가격 요약 표시 */}
+              {section.id === 'price-history' && <PriceSummary
+                model={selectedGpu}
+                billingType={filtersByModel[selectedGpu]?.billingType || 'on_demand'}
+                onBillingTypeChange={billingType => setFiltersByModel(current => ({
+                  ...current,
+                  [selectedGpu]: {
+                    ...(current[selectedGpu] || createDefaultFilters()),
+                    billingType,
+                    contractMonths: 'all',
+                  },
+                }))}
+              />}
             </section>
           ))}
         </div>

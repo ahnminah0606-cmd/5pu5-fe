@@ -105,6 +105,52 @@ img {
 }
 
 /* # 2026-11-05 | 선택한 제품명: 본문과 왼쪽 기준선을 맞춘 큰 제목 */
+/* # 2026-11-06 | 가격 요약: 테두리 없이 여백으로 구분한 3개 열 */
+.price-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 40px 0 56px;
+  padding: 12px 0;
+  text-align: center;
+}
+.price-summary-item { min-width: 0; }
+/* # 2026-11-06 | 최저가 × 시간 계산: 테두리 없이 한 줄 수식으로 정렬 */
+.cost-calculator { margin: 0 0 48px; padding: 28px 24px; background: #fafafb; border-radius: 12px; text-align: center; }
+.cost-calculator h3 { margin: 0 0 24px; font-size: 14px; font-weight: 600; text-align: left; } /* # 2026-11-06 | 예상 이용요금 제목 왼쪽 정렬 */
+.cost-calculator-equation { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 20px; align-items: center; max-width: 600px; margin: 0 auto; }
+.cost-calculator-rate, .cost-calculator-total { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.cost-calculator-label, .cost-calculator-hours label { color: #85858c; font-size: 11px; }
+.cost-calculator-rate strong, .cost-calculator-total strong { font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+/* # 2026-11-06 | 예상 이용요금 결과를 단가보다 크고 진하게 강조 */
+.cost-calculator-total strong { font-size: 32px; font-weight: 700; color: #080b0f; }
+.cost-calculator-total .cost-calculator-label:first-child { color: #1d1d1f; font-size: 12px; font-weight: 600; }
+.cost-calculator-symbol { color: #a1a1a6; font-size: 20px; }
+.cost-calculator-hours label { display: block; margin-bottom: 8px; }
+.cost-calculator-hours > div { display: flex; gap: 8px; align-items: center; }
+.cost-calculator-hours input { width: 100%; min-width: 0; padding: 10px; border: 0; border-radius: 7px; background: #fff; color: #1d1d1f; font: inherit; font-size: 16px; text-align: center; }
+.cost-calculator-hours input:focus-visible { outline: 2px solid #1464f4; outline-offset: 2px; }
+.cost-calculator-hours > div > span { flex-shrink: 0; color: #6e6e73; font-size: 11px; }
+@media (max-width: 600px) {
+  .cost-calculator { padding: 24px 16px; }
+  .cost-calculator-equation { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 16px; }
+  .cost-calculator-equation > .cost-calculator-symbol:nth-of-type(2) { display: none; }
+  .cost-calculator-total { grid-column: 1 / -1; margin-top: 8px; }
+}
+/* # 2026-11-06 | 가격 현황 계약 유형 전환: 선택한 항목만 진하게 표시 */
+.price-billing-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+.price-billing-tabs button { padding: 8px 16px; border: 0; border-radius: 7px; background: transparent; color: #85858c; font-size: 12px; }
+.price-billing-tabs button:hover { color: #1d1d1f; }
+.price-billing-tabs button[aria-pressed="true"] { background: #f6f6f8; color: #1d1d1f; font-weight: 600; }
+.price-summary dt { margin-bottom: 16px; font-size: 14px; font-weight: 500; color: #6e6e73; }
+.price-summary dd { margin: 0; }
+.price-summary-value { display: block; font-size: clamp(28px, 3.5vw, 44px); line-height: 1.2; font-weight: 600; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.price-summary-unit { display: block; margin-top: 10px; color: #85858c; font-size: 11px; }
+@media (max-width: 480px) {
+  .price-summary { gap: 12px; margin: 28px 0 40px; }
+  .price-summary-unit { font-size: 9px; }
+}
+
 .gpu-product-heading {
   padding: 24px 0 56px;
 }
@@ -205,7 +251,7 @@ html {
   top: 100%;
   left: 50%;
   transform: translateX(-50%); /* # 2026-11-05 | 박스 너비의 절반만큼 되돌려 화면 가로 중앙 정렬 */
-  width: min(768px, calc(75% - 24px));
+  width: min(780px, calc(75% - 24px)); /* # 2026-11-05 | 필터 박스 최대 너비를 780px로 조정 */
   padding-top: 8px; /* 탭에서 박스로 이동할 때 마우스가 끊기지 않는 연결 영역 */
   z-index: 21;
 }
@@ -364,20 +410,32 @@ html {
 
 /* # 2026-11-05 | 호버 박스 내부: 기본 조건과 범위 필터를 작은 글씨로 배치 */
 .gpu-hover-panel-box { max-height: calc(100svh - 78px); overflow-y: auto; }
-.gpu-filter-form { padding: 20px; color: #1d1d1f; }
-.gpu-filter-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.gpu-filter-heading h2 { margin: 0; font-size: 13px; font-weight: 600; }
+/* # 2026-11-05 | 필터 박스 좌우 여백을 넉넉하게 확보 */
+.gpu-filter-form { padding: 24px 40px; color: #1d1d1f; }
+.gpu-filter-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.gpu-filter-heading h2 { margin: 0; font-size: 17px; font-weight: 600; } /* # 2026-11-05 | 필터 상단 모델명 크기 확대 */
 .filter-reset { border: 0; background: transparent; color: #6e6e73; font-size: 12px; padding: 8px; }
 .gpu-filter-form fieldset { min-width: 0; border: 0; padding: 0; margin: 0; }
 .gpu-filter-form legend { padding: 0; margin-bottom: 10px; font-size: 12px; font-weight: 600; }
-.gpu-filter-selects { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin: 0 0 20px; }
+.gpu-filter-selects { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; margin: 0 0 32px; }
+/* # 2026-11-05 | 운영체제 기본 팝업 대신 입력칸 아래에 정돈된 목록 표시 */
+.filter-select { position: relative; min-width: 0; }
+.filter-select-label { display: block; margin-bottom: 8px; font-size: 11px; color: #6e6e73; }
+.filter-select-trigger { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 40px; padding: 10px 12px; border: 0; border-radius: 7px; background: #f6f6f8; color: #1d1d1f; font-size: 12px; text-align: left; }
+.filter-select-chevron { color: #85858c; transition: transform 150ms; }
+.filter-select-chevron.is-open { transform: rotate(180deg); }
+.filter-select-options { position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 5; padding: 6px; border-radius: 9px; background: #fff; box-shadow: 0 6px 24px #00000014; }
+.filter-select-options button { display: flex; justify-content: space-between; align-items: center; gap: 8px; width: 100%; min-height: 36px; padding: 8px 10px; border: 0; border-radius: 5px; background: transparent; color: #6e6e73; text-align: left; font-size: 12px; }
+.filter-select-options button:hover,
+.filter-select-options button[aria-pressed="true"] { background: #f6f6f8; color: #1d1d1f; }
 .gpu-filter-selects label { display: flex; flex-direction: column; gap: 6px; font-size: 11px; font-weight: 400; color: #6e6e73; }
-.gpu-filter-selects select { width: 100%; min-height: 38px; border: 1px solid #dedee3; border-radius: 7px; padding: 0 10px; background: #fff; color: #1d1d1f; font: inherit; font-weight: 400; }
-.gpu-filter-ranges { display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: 20px; padding: 0 0 12px; }
+/* # 2026-11-05 | 테두리 대신 옅은 바탕과 여백으로 입력 영역 구분 */
+.gpu-filter-selects select { width: 100%; min-height: 40px; border: 0; border-radius: 7px; padding: 0 12px; background: #f6f6f8; color: #1d1d1f; font: inherit; font-weight: 400; }
+.gpu-filter-ranges { display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: 36px; padding: 0 0 24px; }
 .range-filter legend span { display: inline; margin-left: 4px; font-size: 10px; font-weight: 400; color: #85858c; }
 .range-values { display: flex; align-items: flex-end; gap: 6px; }
 .range-values label { flex: 1; min-width: 0; color: #85858c; font-size: 10px; }
-.range-values input { display: block; width: 100%; min-width: 0; margin-top: 4px; padding: 7px 6px; border: 0; border-bottom: 1px solid #e5e5e7; border-radius: 0; color: #1d1d1f; background: transparent; font: inherit; font-size: 12px; }
+.range-values input { display: block; width: 100%; min-width: 0; margin-top: 6px; padding: 9px 10px; border: 0; border-radius: 7px; color: #1d1d1f; background: #f6f6f8; font: inherit; font-size: 12px; }
 .range-values > span { padding-bottom: 7px; color: #85858c; }
 /* # 2026-11-05 | 겹친 두 슬라이더: 손잡이만 드래그 가능하게 하여 최소·최대 독립 조절 */
 .dual-range { position: relative; height: 32px; margin-top: 8px; }
@@ -388,8 +446,7 @@ html {
 .gpu-filter-form input:focus-visible,
 .gpu-filter-form select:focus-visible { outline: 2px solid #1464f4; outline-offset: 2px; }
 .range-limits { display: flex; justify-content: space-between; font-size: 10px; color: #85858c; }
-.gpu-filter-actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 8px; }
-.gpu-filter-actions p { margin: 0; color: #85858c; font-size: 11px; }
+.gpu-filter-actions { display: flex; align-items: center; justify-content: flex-end; gap: 16px; padding-top: 8px; }
 .filter-apply { flex-shrink: 0; min-height: 38px; padding: 0 18px; border: 0; border-radius: 7px; background: #1d1d1f; color: #fff; font-size: 12px; }
 .gpu-product-heading .applied-filter-summary { max-width: 720px; font-size: 12px; line-height: 1.8; }
 @media (max-width: 600px) {
